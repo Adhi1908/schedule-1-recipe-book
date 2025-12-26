@@ -311,7 +311,8 @@ export function findOptimalMixes(
     }
 
     const recommendations: Recommendation[] = [];
-    const maxIngredientsPerMix = 8; // Increased for better profit potential
+    // Max 4 ingredients for performance (more causes exponential slowdown)
+    const maxIngredientsPerMix = 4;
 
     // For each owned product
     for (const product of ownedProducts) {
@@ -331,16 +332,22 @@ export function findOptimalMixes(
 
         // If we have ingredients, try combinations
         if (ownedIngredients.length > 0) {
-            // Create ingredient pool respecting quantities
+            // Create ingredient pool - limit to 2 of each type maxfor performance
             const ingredientPool: Ingredient[] = [];
             for (const item of ownedIngredients) {
-                for (let i = 0; i < Math.min(item.quantity, 4); i++) {
+                for (let i = 0; i < Math.min(item.quantity, 2); i++) {
                     ingredientPool.push(item.ingredient);
                 }
             }
 
-            // Generate combinations
+            // Generate combinations with a hard limit to prevent lag
+            let combinationsProcessed = 0;
+            const MAX_COMBINATIONS = 500; // Hard limit for performance
+
             for (const combo of generateCombinations(ingredientPool, maxIngredientsPerMix)) {
+                if (combinationsProcessed >= MAX_COMBINATIONS) break;
+                combinationsProcessed++;
+
                 const ingredientIds = combo.map(ing => ing.id);
                 const result = calculateMix(product.id, ingredientIds);
 

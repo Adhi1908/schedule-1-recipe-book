@@ -181,29 +181,41 @@ export function calculateMix(
         let transformedEffects: Array<{ from: string; to: string }> = [];
 
         // Phase 1: Apply ALL matching transformation rules
+        // CRITICAL: Take a snapshot of effects BEFORE transformations to prevent within-step chaining
+        // (e.g., Energizing→Paranoia→Balding should not happen in one step)
         if (transformationRules && Array.isArray(transformationRules)) {
+            // Snapshot the current effects before ANY transformations for this ingredient
+            const effectsSnapshot = [...currentEffects];
+
+            // Collect all transformations that should apply based on the snapshot
+            const transformsToApply: Array<{ from: string; to: string }> = [];
+
             for (const rule of transformationRules) {
-                // Check if all required effects are present
                 const ifPresent = rule.ifPresent || [];
                 const ifNotPresent = rule.ifNotPresent || [];
                 const replace = rule.replace || {};
 
-                // Check if conditions are met
-                const hasRequired = ifPresent.every((effect: string) => hasEffect(currentEffects, effect));
-                const notHasBlocked = ifNotPresent.every((effect: string) => !hasEffect(currentEffects, effect));
+                // Check conditions against the ORIGINAL snapshot
+                const hasRequired = ifPresent.every((effect: string) => hasEffect(effectsSnapshot, effect));
+                const notHasBlocked = ifNotPresent.every((effect: string) => !hasEffect(effectsSnapshot, effect));
 
                 if (hasRequired && notHasBlocked) {
-                    // Apply the transformation - replace effects
                     for (const [oldEffect, newEffect] of Object.entries(replace)) {
-                        if (hasEffect(currentEffects, oldEffect)) {
-                            currentEffects = removeEffect(currentEffects, oldEffect);
-                            if (currentEffects.length < MAX_EFFECTS && !hasEffect(currentEffects, newEffect as string)) {
-                                currentEffects.push(newEffect as string);
-                            }
-                            transformedEffects.push({ from: oldEffect, to: newEffect as string });
+                        // Only transform effects that were in the snapshot
+                        if (hasEffect(effectsSnapshot, oldEffect)) {
+                            transformsToApply.push({ from: oldEffect, to: newEffect as string });
                         }
                     }
                 }
+            }
+
+            // Now apply all collected transformations
+            for (const transform of transformsToApply) {
+                currentEffects = removeEffect(currentEffects, transform.from);
+                if (currentEffects.length < MAX_EFFECTS && !hasEffect(currentEffects, transform.to)) {
+                    currentEffects.push(transform.to);
+                }
+                transformedEffects.push(transform);
             }
         }
 

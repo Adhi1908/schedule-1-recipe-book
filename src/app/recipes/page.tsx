@@ -309,6 +309,8 @@ export default function RecipesPage() {
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<string>('default');
     const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const RECIPES_PER_PAGE = 6;
 
     const sortOptions = [
         { id: 'default', label: 'Default Order' },
@@ -383,6 +385,22 @@ export default function RecipesPage() {
         }
     });
 
+    // Pagination logic
+    const totalPages = Math.ceil(sortedRecipes.length / RECIPES_PER_PAGE);
+    const startIndex = (currentPage - 1) * RECIPES_PER_PAGE;
+    const paginatedRecipes = sortedRecipes.slice(startIndex, startIndex + RECIPES_PER_PAGE);
+
+    // Reset to page 1 when filters change
+    const handleCategoryChange = (category: string) => {
+        setSelectedCategory(category);
+        setCurrentPage(1);
+    };
+
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchQuery(e.target.value);
+        setCurrentPage(1);
+    };
+
     // Handle copy
     const handleCopy = async (recipeId: string, baseProductId: string, ingredientIds: string[]) => {
         const url = window.location.origin + generateMixUrl(baseProductId, ingredientIds);
@@ -414,7 +432,7 @@ export default function RecipesPage() {
                 {categories.map((category) => (
                     <button
                         key={category}
-                        onClick={() => setSelectedCategory(category)}
+                        onClick={() => handleCategoryChange(category)}
                         className={cn(
                             'px-4 py-2 rounded-lg text-sm font-medium transition-all',
                             selectedCategory === category
@@ -423,11 +441,12 @@ export default function RecipesPage() {
                         )}
                     >
                         {category === 'all' ? '🎯 All Recipes' :
-                            category === 'Speed & Mobility' ? '🏃 Speed & Mobility' :
-                                category === 'Jump Boost' ? '🚀 Jump Boost' :
-                                    category === 'Beginner' ? '🌱 Beginner' :
-                                        category === 'High Profit' ? '💰 High Profit' :
-                                            category === 'Special Effects' ? '✨ Special Effects' : category}
+                            category === 'Top Profit' ? '💎 Top Profit' :
+                                category === 'Speed & Mobility' ? '🏃 Speed & Mobility' :
+                                    category === 'Jump Boost' ? '🚀 Jump Boost' :
+                                        category === 'Beginner' ? '🌱 Beginner' :
+                                            category === 'High Profit' ? '💰 High Profit' :
+                                                category === 'Special Effects' ? '✨ Special Effects' : category}
                     </button>
                 ))}
             </div>
@@ -439,7 +458,7 @@ export default function RecipesPage() {
                     type="text"
                     placeholder="Search recipes by name, effect, product name, or base product..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={handleSearchChange}
                     className="w-full pl-12 pr-4 py-3 rounded-xl bg-zinc-900 border border-zinc-800 text-white placeholder-zinc-500 focus:outline-none focus:border-blue-500 transition-colors"
                 />
             </div>
@@ -447,7 +466,7 @@ export default function RecipesPage() {
             {/* Sort Dropdown */}
             <div className="flex items-center justify-between mb-6">
                 <p className="text-sm text-zinc-500">
-                    Showing {sortedRecipes.length} recipes
+                    Showing {startIndex + 1}-{Math.min(startIndex + RECIPES_PER_PAGE, sortedRecipes.length)} of {sortedRecipes.length} recipes
                 </p>
                 <div className="relative">
                     <button
@@ -484,7 +503,7 @@ export default function RecipesPage() {
 
             {/* Recipes Grid */}
             <div className="grid md:grid-cols-2 gap-6">
-                {sortedRecipes.map((recipe) => (
+                {paginatedRecipes.map((recipe) => (
                     <div
                         key={recipe.id}
                         className="p-6 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 hover:border-zinc-700 transition-all"
@@ -598,6 +617,54 @@ export default function RecipesPage() {
                     </div>
                 ))}
             </div>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+                <div className="flex items-center justify-center gap-4 mt-8">
+                    <button
+                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        disabled={currentPage === 1}
+                        className={cn(
+                            'px-4 py-2 rounded-lg font-medium transition-all',
+                            currentPage === 1
+                                ? 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
+                                : 'bg-zinc-800 text-white hover:bg-zinc-700'
+                        )}
+                    >
+                        ← Previous
+                    </button>
+
+                    <div className="flex items-center gap-2">
+                        {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                            <button
+                                key={page}
+                                onClick={() => setCurrentPage(page)}
+                                className={cn(
+                                    'w-10 h-10 rounded-lg font-medium transition-all',
+                                    currentPage === page
+                                        ? 'bg-blue-500 text-white'
+                                        : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700 hover:text-white'
+                                )}
+                            >
+                                {page}
+                            </button>
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                        disabled={currentPage === totalPages}
+                        className={cn(
+                            'px-4 py-2 rounded-lg font-medium transition-all',
+                            currentPage === totalPages
+                                ? 'bg-zinc-800 text-zinc-600 cursor-not-allowed'
+                                : 'bg-zinc-800 text-white hover:bg-zinc-700'
+                        )}
+                    >
+                        Next →
+                    </button>
+                </div>
+            )}
 
             {sortedRecipes.length === 0 && (
                 <div className="text-center py-16">

@@ -1051,17 +1051,6 @@
     "Mega Bean": [
         {
             "ifPresent": [
-                "Bright-Eyed"
-            ],
-            "ifNotPresent": [
-                "Euphoric"
-            ],
-            "replace": {
-                "Bright-Eyed": "Euphoric"
-            }
-        },
-        {
-            "ifPresent": [
                 "Athletic"
             ],
             "ifNotPresent": [
