@@ -11,6 +11,10 @@ export const metadata: Metadata = {
   description: "A deterministic mixing system calculator for the Schedule 1 video game. Build mixes, look up recipes, and explore ingredients with 100% game-accurate data.",
   keywords: ["Schedule 1", "Schedule I", "mixing calculator", "recipe guide", "game guide"],
   authors: [{ name: "Schedule 1 Mixer" }],
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
   openGraph: {
     title: "Schedule 1 Mixer - Game-Accurate Mixing Calculator",
     description: "Build mixes, look up recipes, and explore ingredients with 100% game-accurate data.",
