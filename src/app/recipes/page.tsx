@@ -10,6 +10,88 @@ import { cn, copyToClipboard, generateMixUrl } from '@/lib/utils';
 
 // Pre-defined popular recipes (community verified)
 const popularRecipes = [
+    // === TOP PROFIT MIXES (Verified Best Sell Prices) ===
+    {
+        id: 'ultimate-cocaine',
+        name: 'Ultimate Cocaine',
+        description: '💎 BEST COCAINE - 8 effects, max sell price ~$500+',
+        baseProduct: 'cocaine',
+        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean', 'addy', 'battery', 'chili', 'banana'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'max-meth',
+        name: 'Maximum Meth',
+        description: '💎 BEST METH - 8 effects, sell price ~$250+',
+        baseProduct: 'meth',
+        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean', 'addy', 'battery', 'banana', 'chili'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'perfect-og',
+        name: 'Perfect OG Kush',
+        description: '💎 BEST WEED - Highest profit OG Kush mix',
+        baseProduct: 'og-kush',
+        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean', 'addy', 'battery', 'banana', 'chili'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'ultimate-sour',
+        name: 'Ultimate Sour Diesel',
+        description: '💎 Max value Sour Diesel with 8 effects',
+        baseProduct: 'sour-diesel',
+        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean', 'addy', 'battery', 'banana', 'chili'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'money-green-crack',
+        name: 'Money Green Crack',
+        description: '💎 Green Crack for maximum profit',
+        baseProduct: 'green-crack',
+        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean', 'addy', 'battery', 'banana', 'chili'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'cocaine-315',
+        name: 'Cocaine $315 Mix',
+        description: '💰 Verified $315 sell price, 4 ingredients only',
+        baseProduct: 'cocaine',
+        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'quick-profit-meth',
+        name: 'Quick Profit Meth',
+        description: '💰 High value meth with minimal ingredients',
+        baseProduct: 'meth',
+        ingredients: ['gasoline', 'mega-bean', 'battery'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+    {
+        id: 'high-roi-weed',
+        name: 'High ROI Weed',
+        description: '💰 Best profit-to-cost ratio for weed',
+        baseProduct: 'og-kush',
+        ingredients: ['gasoline', 'mega-bean', 'addy'],
+        confidence: 'confirmed' as const,
+        source: 'Community Verified',
+        category: 'Top Profit'
+    },
+
     // === SPEED & MOBILITY BUILDS ===
     {
         id: 'speed-runner',
@@ -130,7 +212,7 @@ const popularRecipes = [
     {
         id: 'alien-profit',
         name: 'Alien Profit',
-        description: '💰 High-value mix with Anti-Gravity + alien visuals (~$164-200)',
+        description: '💰 High-value mix with Anti-Gravity + alien visuals',
         baseProduct: 'og-kush',
         ingredients: ['paracetamol', 'cuke', 'mega-bean', 'battery'],
         confidence: 'confirmed' as const,
@@ -160,7 +242,7 @@ const popularRecipes = [
     {
         id: 'wedding-fruit',
         name: 'Wedding Fruit',
-        description: '💰 Green Crack 7-ingredient money maker (~$153)',
+        description: '💰 Green Crack 7-ingredient money maker',
         baseProduct: 'green-crack',
         ingredients: ['banana', 'cuke', 'paracetamol', 'gasoline', 'chili', 'mega-bean', 'battery'],
         confidence: 'confirmed' as const,

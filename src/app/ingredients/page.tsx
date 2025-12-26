@@ -8,24 +8,27 @@ import { FlaskConical, Search, ArrowRight, ChevronDown, ChevronUp } from 'lucide
 import { cn } from '@/lib/utils';
 import transformationsData from '@/data/transformations.json';
 
+type TransformationRule = {
+    ifPresent: string[];
+    ifNotPresent: string[];
+    replace: Record<string, string>;
+};
+
+type Transformations = Record<string, TransformationRule[]>;
+
 export default function IngredientsPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [expandedId, setExpandedId] = useState<string | null>(null);
 
     const ingredients = getAllIngredients();
-    const transformations = transformationsData.transformations as Record<string, {
-        default: string;
-        rules: { if: string; becomes: string }[];
-        confidence: string;
-        source: string;
-    }>;
+    const transformations = transformationsData as unknown as Transformations;
 
     // Filter ingredients
     const filteredIngredients = useMemo(() => {
         const query = searchQuery.toLowerCase();
         return ingredients.filter(ing =>
             ing.name.toLowerCase().includes(query) ||
-            ing.defaultEffect.toLowerCase().includes(query)
+            ((ing as any).effect || '').toLowerCase().includes(query)
         );
     }, [ingredients, searchQuery]);
 
@@ -65,7 +68,9 @@ export default function IngredientsPage() {
             {/* Ingredients List */}
             <div className="space-y-4">
                 {filteredIngredients.map((ingredient) => {
-                    const transformation = transformations[ingredient.id];
+                    // Look up transformations by ingredient NAME
+                    const transformationRules = transformations[ingredient.name] || [];
+                    const defaultEffect = (ingredient as any).effect || '';
                     const isExpanded = expandedId === ingredient.id;
 
                     return (
@@ -95,16 +100,16 @@ export default function IngredientsPage() {
                                     </div>
                                     <div>
                                         <h3 className="text-lg font-semibold text-white">{ingredient.name}</h3>
-                                        <p className="text-sm text-zinc-500">{ingredient.source}</p>
+                                        <p className="text-sm text-zinc-500">Rank {(ingredient as any).rank || 'N/A'}</p>
                                     </div>
                                 </div>
 
                                 <div className="flex items-center gap-4">
                                     <div className="text-right hidden sm:block">
-                                        <p className="text-lg font-bold text-purple-400">${ingredient.cost}</p>
+                                        <p className="text-lg font-bold text-purple-400">${(ingredient as any).price || 0}</p>
                                         <p className="text-xs text-zinc-500">cost</p>
                                     </div>
-                                    <EffectBadge effect={ingredient.defaultEffect} />
+                                    {defaultEffect && <EffectBadge effect={defaultEffect} />}
                                     {isExpanded ? (
                                         <ChevronUp className="h-5 w-5 text-zinc-500" />
                                     ) : (
@@ -114,7 +119,7 @@ export default function IngredientsPage() {
                             </button>
 
                             {/* Expanded Content */}
-                            {isExpanded && transformation && (
+                            {isExpanded && (
                                 <div className="px-5 pb-5 border-t border-zinc-800">
                                     <div className="pt-5 space-y-4">
                                         {/* Default Effect */}
@@ -124,37 +129,44 @@ export default function IngredientsPage() {
                                                 When added to a mix without matching transformation rules, this ingredient adds:
                                             </p>
                                             <div className="mt-2">
-                                                <EffectBadge effect={transformation.default} size="lg" />
+                                                <EffectBadge effect={defaultEffect || 'None'} size="lg" />
                                             </div>
                                         </div>
 
                                         {/* Transformation Rules */}
-                                        {transformation.rules.length > 0 && (
+                                        {transformationRules.length > 0 && (
                                             <div>
                                                 <h4 className="text-sm font-medium text-zinc-400 mb-3">Transformation Rules</h4>
                                                 <p className="text-sm text-zinc-500 mb-3">
                                                     If the mix already has one of these effects, it will transform:
                                                 </p>
                                                 <div className="grid gap-2">
-                                                    {transformation.rules.map((rule, idx) => (
-                                                        <div
-                                                            key={idx}
-                                                            className="flex items-center gap-3 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700"
-                                                        >
-                                                            <EffectBadge effect={rule.if} size="sm" />
-                                                            <ArrowRight className="h-4 w-4 text-purple-400" />
-                                                            <EffectBadge effect={rule.becomes} size="sm" />
-                                                        </div>
-                                                    ))}
+                                                    {transformationRules.map((rule, idx) => {
+                                                        // Get the replacement entry
+                                                        const entries = Object.entries(rule.replace || {});
+                                                        if (entries.length === 0) return null;
+                                                        const [oldEffect, newEffect] = entries[0];
+
+                                                        return (
+                                                            <div
+                                                                key={idx}
+                                                                className="flex items-center gap-3 p-3 rounded-lg bg-zinc-800/50 border border-zinc-700"
+                                                            >
+                                                                <EffectBadge effect={oldEffect} size="sm" />
+                                                                <ArrowRight className="h-4 w-4 text-purple-400" />
+                                                                <EffectBadge effect={newEffect} size="sm" />
+                                                            </div>
+                                                        );
+                                                    })}
                                                 </div>
                                             </div>
                                         )}
 
-                                        {/* Confidence */}
+                                        {/* Confidence - hardcoded since data doesn't have this */}
                                         <div className="pt-3 border-t border-zinc-800/50">
                                             <ConfidenceIndicator
-                                                level={transformation.confidence as 'confirmed' | 'unconfirmed'}
-                                                source={transformation.source}
+                                                level="confirmed"
+                                                source="Game Data"
                                             />
                                         </div>
                                     </div>

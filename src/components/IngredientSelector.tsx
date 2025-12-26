@@ -16,6 +16,14 @@ interface IngredientSelectorProps {
     className?: string;
 }
 
+type TransformationRule = {
+    ifPresent: string[];
+    ifNotPresent: string[];
+    replace: Record<string, string>;
+};
+
+type Transformations = Record<string, TransformationRule[]>;
+
 export default function IngredientSelector({
     selectedIngredients,
     onAdd,
@@ -28,7 +36,7 @@ export default function IngredientSelector({
     const [search, setSearch] = useState('');
 
     const allIngredients = getAllIngredients();
-    const transformations = transformationsData.transformations as Record<string, { default: string; rules: { if: string; becomes: string }[] }>;
+    const transformations = transformationsData as unknown as Transformations;
 
     const filteredIngredients = useMemo(() => {
         return allIngredients.filter(ing =>
@@ -43,18 +51,34 @@ export default function IngredientSelector({
     }, [selectedIngredients, allIngredients]);
 
     // Get what effect an ingredient will produce given current effects
-    const getPredictedEffect = (ingredientId: string): { effect: string; type: 'add' | 'transform' } => {
-        const transformation = transformations[ingredientId];
-        if (!transformation) return { effect: 'Unknown', type: 'add' };
+    const getPredictedEffect = (ingredient: Ingredient): { effect: string; type: 'add' | 'transform' } => {
+        // Look up by ingredient NAME
+        const transformationRules = transformations[ingredient.name];
+        const defaultEffect = (ingredient as any).effect || '';
 
-        // Check for transformations based on current effects
-        for (const rule of transformation.rules) {
-            if (currentEffects.some(e => e.toLowerCase() === rule.if.toLowerCase())) {
-                return { effect: `${rule.if} → ${rule.becomes}`, type: 'transform' };
+        if (transformationRules && Array.isArray(transformationRules)) {
+            // Check for transformations based on current effects
+            for (const rule of transformationRules) {
+                const ifPresent = rule.ifPresent || [];
+                const ifNotPresent = rule.ifNotPresent || [];
+                const replace = rule.replace || {};
+
+                // Check if conditions are met
+                const hasRequired = ifPresent.every(effect =>
+                    currentEffects.some(e => e.toLowerCase() === effect.toLowerCase())
+                );
+                const notHasBlocked = ifNotPresent.every(effect =>
+                    !currentEffects.some(e => e.toLowerCase() === effect.toLowerCase())
+                );
+
+                if (hasRequired && notHasBlocked && Object.keys(replace).length > 0) {
+                    const [oldEffect, newEffect] = Object.entries(replace)[0];
+                    return { effect: `${oldEffect} → ${newEffect}`, type: 'transform' };
+                }
             }
         }
 
-        return { effect: transformation.default, type: 'add' };
+        return { effect: defaultEffect || 'Unknown', type: 'add' };
     };
 
     return (
@@ -144,7 +168,7 @@ export default function IngredientSelector({
                             {/* Ingredient List */}
                             <div className="max-h-64 overflow-y-auto">
                                 {filteredIngredients.map((ingredient) => {
-                                    const prediction = getPredictedEffect(ingredient.id);
+                                    const prediction = getPredictedEffect(ingredient);
                                     return (
                                         <button
                                             key={ingredient.id}
@@ -164,7 +188,7 @@ export default function IngredientSelector({
                                                 />
                                                 <div>
                                                     <span className="text-white font-medium">{ingredient.name}</span>
-                                                    <span className="ml-2 text-xs text-zinc-500">${ingredient.cost}</span>
+                                                    <span className="ml-2 text-xs text-zinc-500">${(ingredient as any).price}</span>
                                                 </div>
                                             </div>
                                             <span className={cn(

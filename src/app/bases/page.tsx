@@ -42,7 +42,8 @@ export default function BasesPage() {
     const filteredProducts = products.filter(product => {
         const matchesSearch =
             product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            product.description.toLowerCase().includes(searchQuery.toLowerCase());
+            product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            (product.description || '').toLowerCase().includes(searchQuery.toLowerCase());
         const matchesCategory = !selectedCategory || product.category === selectedCategory;
         return matchesSearch && matchesCategory;
     });
@@ -100,7 +101,11 @@ export default function BasesPage() {
                     </button>
                     {categories.map(category => {
                         const Icon = categoryIcons[category] || Leaf;
-                        const colors = categoryColors[category];
+                        const colors = categoryColors[category] || {
+                            bg: 'bg-zinc-500/10',
+                            border: 'border-zinc-500/30',
+                            text: 'text-zinc-400',
+                        };
                         return (
                             <button
                                 key={category}
@@ -124,7 +129,11 @@ export default function BasesPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredProducts.map((product) => {
                     const Icon = categoryIcons[product.category] || Leaf;
-                    const colors = categoryColors[product.category];
+                    const colors = categoryColors[product.category] || {
+                        bg: 'bg-zinc-500/10',
+                        border: 'border-zinc-500/30',
+                        text: 'text-zinc-400',
+                    };
 
                     return (
                         <div
@@ -169,9 +178,11 @@ export default function BasesPage() {
                             <div className="mb-4">
                                 <p className="text-sm text-zinc-400 mb-2">Base Effects:</p>
                                 <div className="flex flex-wrap gap-2">
-                                    {product.baseEffects.map((effect) => (
-                                        <EffectBadge key={effect} effect={effect} />
-                                    ))}
+                                    {product.defaultEffect ? (
+                                        <EffectBadge effect={product.defaultEffect} />
+                                    ) : (
+                                        <span className="text-xs text-zinc-600">No natural effects</span>
+                                    )}
                                 </div>
                             </div>
 
@@ -183,7 +194,7 @@ export default function BasesPage() {
 
                             {/* Footer */}
                             <div className="flex items-center justify-between pt-4 border-t border-zinc-800">
-                                <ConfidenceIndicator level={product.confidence} size="sm" />
+                                <ConfidenceIndicator level={product.confidence || 'unconfirmed'} size="sm" />
                                 <Link
                                     href={generateMixUrl(product.id, [])}
                                     className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-green-500/10 text-green-400 hover:bg-green-500/20 text-sm transition-all"

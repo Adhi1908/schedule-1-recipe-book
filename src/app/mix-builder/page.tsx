@@ -165,9 +165,9 @@ function MixBuilderContent() {
                                         <div className="text-left">
                                             <p className="font-medium text-white">{selectedProduct.name}</p>
                                             <div className="flex items-center gap-2 mt-1">
-                                                {selectedProduct.baseEffects.map(effect => (
-                                                    <EffectBadge key={effect} effect={effect} size="sm" />
-                                                ))}
+                                                {selectedProduct.defaultEffect && (
+                                                    <EffectBadge effect={selectedProduct.defaultEffect} size="sm" />
+                                                )}
                                             </div>
                                         </div>
                                     </div>
@@ -209,9 +209,9 @@ function MixBuilderContent() {
                                                     </div>
                                                 </div>
                                                 <div className="flex items-center gap-2">
-                                                    {product.baseEffects.map(effect => (
-                                                        <EffectBadge key={effect} effect={effect} size="sm" />
-                                                    ))}
+                                                    {product.defaultEffect && (
+                                                        <EffectBadge effect={product.defaultEffect} size="sm" />
+                                                    )}
                                                     <span className="text-green-400 font-medium">${product.basePrice}</span>
                                                 </div>
                                             </button>

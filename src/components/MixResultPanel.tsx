@@ -113,11 +113,10 @@ export default function MixResultPanel({ result, className }: MixResultPanelProp
                         <Beaker className="h-5 w-5 text-purple-400" />
                     </div>
                     <div>
-                        <p className="text-lg font-semibold text-white flex items-center gap-1">
+                        <p className="text-lg font-semibold text-white">
                             {result.addictionRating}%
-                            <span className="text-amber-400 text-xs" title="Addiction values are estimates and may not reflect actual in-game values">⚠️</span>
                         </p>
-                        <p className="text-xs text-zinc-500">addiction*</p>
+                        <p className="text-xs text-zinc-500">addiction</p>
                     </div>
                 </div>
             </div>
@@ -182,10 +181,10 @@ export default function MixResultPanel({ result, className }: MixResultPanelProp
                 </div>
             )}
 
-            {/* Disclaimer */}
+            {/* Data source note */}
             <div className="px-6 py-3 border-t border-zinc-800/50 bg-zinc-950/50">
                 <p className="text-xs text-zinc-600">
-                    *Addiction values are estimates and may not reflect actual in-game values.
+                    Addiction formula: Base Product + Sum of Effect Modifiers (max 8 effects)
                 </p>
             </div>
         </div>

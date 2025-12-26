@@ -228,7 +228,7 @@ export default function OptimizerPage() {
                                             />
                                             <div className="min-w-0">
                                                 <p className="text-sm font-medium text-white truncate">{ingredient.name}</p>
-                                                <p className="text-xs text-zinc-500">${ingredient.cost}</p>
+                                                <p className="text-xs text-zinc-500">${(ingredient as any).price}</p>
                                             </div>
                                         </div>
 

@@ -99,7 +99,7 @@ export default function ProductCard({
                 {/* Price/Cost */}
                 <div className="text-right">
                     <p className="text-lg font-bold text-green-400">
-                        ${isProduct && product ? product.basePrice : ingredient?.cost}
+                        ${isProduct && product ? product.basePrice : (ingredient as any)?.price}
                     </p>
                     <p className="text-xs text-zinc-500">
                         {isProduct ? 'base price' : 'cost'}
@@ -109,9 +109,9 @@ export default function ProductCard({
 
             {/* Effects */}
             <div className="mt-4 flex flex-wrap gap-2">
-                {isProduct && product?.baseEffects.map((effect) => (
-                    <EffectBadge key={effect} effect={effect} size="sm" />
-                ))}
+                {isProduct && product?.defaultEffect && (
+                    <EffectBadge effect={product.defaultEffect} size="sm" />
+                )}
                 {!isProduct && ingredient && (
                     <EffectBadge effect={ingredient.defaultEffect} size="sm" />
                 )}
@@ -120,7 +120,7 @@ export default function ProductCard({
             {/* Footer */}
             <div className="mt-4 pt-3 border-t border-zinc-800/50 flex items-center justify-between">
                 <ConfidenceIndicator
-                    level={item.confidence}
+                    level={item.confidence || 'unconfirmed'}
                     size="sm"
                 />
                 {isProduct && product && (

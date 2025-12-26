@@ -70,26 +70,34 @@ export default function EffectBadge({
     className,
 }: EffectBadgeProps) {
     const effectData = getEffectByName(effect);
-    const tier = effectData?.tier || 'common';
-    const multiplier = effectData?.priceMultiplier || 1;
+    const tier = effectData?.tier || 1;
+    const multiplier = effectData?.multiplier || 1;
 
-    const config = tierConfig[tier as keyof typeof tierConfig] || tierConfig.common;
+    const config = tierConfig.common; // Default fallback
     const sizeStyles = sizeConfig[size];
-    const Icon = config.icon;
+    const Icon = tier === 1 ? Star : (tier === 2 ? Star : (tier >= 3 ? Sparkles : Star));
+
+    // Dynamic styles based on effect color
+    const dynamicStyle = effectData?.color ? {
+        borderColor: effectData.color + '80', // 50% opacity
+        color: effectData.color,
+        backgroundColor: effectData.color + '1A', // 10% opacity
+        boxShadow: `0 0 10px ${effectData.color}1A`
+    } : {};
 
     return (
         <div
             className={cn(
                 'inline-flex items-center rounded-full border font-medium transition-all',
-                config.bg,
-                config.border,
-                config.text,
-                config.glow && `shadow-lg ${config.glow}`,
+                !effectData?.color && config.bg,
+                !effectData?.color && config.border,
+                !effectData?.color && config.text,
                 sizeStyles.padding,
                 sizeStyles.text,
                 sizeStyles.gap,
                 className
             )}
+            style={dynamicStyle}
             title={effectData?.description || effect}
         >
             <Icon className={sizeStyles.icon} />

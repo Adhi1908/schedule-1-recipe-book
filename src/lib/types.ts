@@ -4,13 +4,14 @@ export interface Product {
   id: string;
   name: string;
   category: 'weed' | 'meth' | 'cocaine';
-  baseEffects: string[];
+  defaultEffect?: string; // Some products like Meth/Cocaine have no default effect
   basePrice: number;
-  description: string;
-  unlockRequirement: string;
-  patchVersion: string;
-  confidence: 'confirmed' | 'unconfirmed';
-  source: string;
+  addictionModifier: number;  // Base addiction for product (e.g., Meth: 0.6, Cocaine: 0.4, Weed: 0)
+  description?: string;
+  unlockRequirement?: string;
+  patchVersion?: string;
+  confidence?: 'confirmed' | 'unconfirmed';
+  source?: string;
 }
 
 export interface Ingredient {
@@ -26,11 +27,12 @@ export interface Ingredient {
 export interface Effect {
   id: string;
   name: string;
-  priceMultiplier: number;
+  multiplier: number;
   addictionModifier: number;
   description: string;
-  tier: 'common' | 'rare' | 'legendary' | 'negative';
-  confidence: 'confirmed' | 'unconfirmed';
+  tier: number;
+  color?: string;
+  confidence?: 'confirmed' | 'unconfirmed';
 }
 
 export interface TransformationRule {

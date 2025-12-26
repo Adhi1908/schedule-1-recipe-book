@@ -34,9 +34,15 @@ export const GOAL_CATEGORIES = {
         category: 'Money'
     },
     'highest-value': {
-        name: 'Highest Value',
-        description: 'Maximum final selling price',
+        name: 'Highest Sell Price',
+        description: 'Maximum final selling price (best for maximizing income)',
         icon: '💎',
+        category: 'Money'
+    },
+    'max-multiplier-profit': {
+        name: 'Max Multiplier + Profit',
+        description: 'Highest price multiplier combined with profit',
+        icon: '📈',
         category: 'Money'
     },
     'best-roi': {
@@ -143,8 +149,14 @@ function calculateScore(result: MixResult, goal: GoalType, ingredientCount: numb
 
         case 'highest-value':
             return {
-                score: result.finalPrice,
-                reason: `$${result.finalPrice} selling price`
+                score: result.finalPrice * 10 + result.profit,
+                reason: `$${result.finalPrice} sell price, $${result.profit} profit`
+            };
+
+        case 'max-multiplier-profit':
+            return {
+                score: (result.priceMultiplier * 100) + result.profit,
+                reason: `×${result.priceMultiplier.toFixed(2)} multiplier, $${result.profit} profit`
             };
 
         case 'best-roi':
@@ -299,7 +311,7 @@ export function findOptimalMixes(
     }
 
     const recommendations: Recommendation[] = [];
-    const maxIngredientsPerMix = 4; // Limit for performance
+    const maxIngredientsPerMix = 8; // Increased for better profit potential
 
     // For each owned product
     for (const product of ownedProducts) {

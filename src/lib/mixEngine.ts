@@ -5,13 +5,15 @@ import ingredientsData from '@/data/ingredients.json';
 import effectsData from '@/data/effects.json';
 import transformationsData from '@/data/transformations.json';
 import productNamesData from '@/data/productNames.json';
-import type { Product, Ingredient, Effect, MixResult, MixStep, Transformations } from './types';
+import type { Product, Ingredient, Effect, MixResult, MixStep } from './types';
 
-const products = productsData.products as Product[];
-const ingredients = ingredientsData.ingredients as Ingredient[];
-const effects = effectsData.effects as Effect[];
-const transformations = transformationsData.transformations as Transformations;
-const MAX_EFFECTS = transformationsData.meta.maxEffects;
+// JSON files are plain arrays, not wrapped objects
+const products = productsData as unknown as Product[];
+const ingredients = ingredientsData as unknown as Ingredient[];
+const effects = effectsData as unknown as Effect[];
+// transformations.json is a plain object mapping ingredient names to transformation rules
+const transformations = transformationsData as unknown as Record<string, Array<{ ifPresent: string[], ifNotPresent: string[], replace: Record<string, string> }>>;
+const MAX_EFFECTS = 8;  // Max effects in Schedule 1
 const productNames = productNamesData.productNames;
 
 // Helper functions
@@ -151,7 +153,10 @@ export function calculateMix(
     }
 
     // Start with base effects
-    let currentEffects = [...baseProduct.baseEffects];
+    let currentEffects: string[] = [];
+    if (baseProduct.defaultEffect) {
+        currentEffects.push(baseProduct.defaultEffect);
+    }
     const steps: MixStep[] = [];
     const warnings: string[] = [];
     let totalIngredientCost = 0;
@@ -165,74 +170,84 @@ export function calculateMix(
             continue;
         }
 
-        totalIngredientCost += ingredient.cost;
-        const transformation = transformations[ingredientId];
+        totalIngredientCost += (ingredient as any).price || 0;
 
-        if (!transformation) {
-            warnings.push(`No transformation data for: ${ingredient.name}`);
-            continue;
-        }
+        // Look up transformation rules by ingredient NAME (not id)
+        const transformationRules = transformations[ingredient.name];
 
         // Check if any current effect triggers a transformation
         let transformed = false;
         let step: MixStep | null = null;
+        let transformedEffects: Array<{ from: string; to: string }> = [];
 
-        for (const rule of transformation.rules) {
-            if (hasEffect(currentEffects, rule.if)) {
-                // Transform the matching effect
-                currentEffects = removeEffect(currentEffects, rule.if);
+        // Phase 1: Apply ALL matching transformation rules
+        if (transformationRules && Array.isArray(transformationRules)) {
+            for (const rule of transformationRules) {
+                // Check if all required effects are present
+                const ifPresent = rule.ifPresent || [];
+                const ifNotPresent = rule.ifNotPresent || [];
+                const replace = rule.replace || {};
 
-                // Only add the new effect if we're under the max
-                if (currentEffects.length < MAX_EFFECTS) {
-                    currentEffects.push(rule.becomes);
+                // Check if conditions are met
+                const hasRequired = ifPresent.every((effect: string) => hasEffect(currentEffects, effect));
+                const notHasBlocked = ifNotPresent.every((effect: string) => !hasEffect(currentEffects, effect));
+
+                if (hasRequired && notHasBlocked) {
+                    // Apply the transformation - replace effects
+                    for (const [oldEffect, newEffect] of Object.entries(replace)) {
+                        if (hasEffect(currentEffects, oldEffect)) {
+                            currentEffects = removeEffect(currentEffects, oldEffect);
+                            if (currentEffects.length < MAX_EFFECTS && !hasEffect(currentEffects, newEffect as string)) {
+                                currentEffects.push(newEffect as string);
+                            }
+                            transformedEffects.push({ from: oldEffect, to: newEffect as string });
+                        }
+                    }
                 }
-
-                step = {
-                    ingredientName: ingredient.name,
-                    ingredientId: ingredient.id,
-                    action: 'transformed',
-                    effectBefore: rule.if,
-                    effectAfter: rule.becomes,
-                    explanation: `${rule.if} → ${rule.becomes}`
-                };
-                transformed = true;
-                break; // Only one transformation per ingredient
             }
         }
 
-        // If no transformation occurred, add the default effect
-        if (!transformed) {
-            if (currentEffects.length < MAX_EFFECTS) {
-                // Don't add duplicate effects
-                if (!hasEffect(currentEffects, transformation.default)) {
-                    currentEffects.push(transformation.default);
-                    step = {
-                        ingredientName: ingredient.name,
-                        ingredientId: ingredient.id,
-                        action: 'added',
-                        effectAfter: transformation.default,
-                        explanation: `Added ${transformation.default}`
-                    };
-                } else {
-                    step = {
-                        ingredientName: ingredient.name,
-                        ingredientId: ingredient.id,
-                        action: 'added',
-                        effectAfter: transformation.default,
-                        explanation: `${transformation.default} (already present, no change)`
-                    };
-                    warnings.push(`${ingredient.name}: ${transformation.default} already present`);
-                }
-            } else {
-                warnings.push(`Max effects (${MAX_EFFECTS}) reached, ${ingredient.name} had no effect`);
-                step = {
-                    ingredientName: ingredient.name,
-                    ingredientId: ingredient.id,
-                    action: 'added',
-                    effectAfter: 'None',
-                    explanation: `Max effects reached - no change`
-                };
-            }
+        // Phase 2: ALWAYS add default effect after transformations
+        // This matches the game's actual behavior - transformation AND default effect
+        const defaultEffect = (ingredient as any).effect || '';
+        let addedDefault = false;
+        if (defaultEffect && currentEffects.length < MAX_EFFECTS && !hasEffect(currentEffects, defaultEffect)) {
+            currentEffects.push(defaultEffect);
+            addedDefault = true;
+        }
+
+        // Create step for logging
+        if (transformedEffects.length > 0) {
+            const transformExplanation = transformedEffects
+                .map(t => `${t.from} → ${t.to}`)
+                .join(', ');
+            step = {
+                ingredientName: ingredient.name,
+                ingredientId: ingredient.id,
+                action: 'transformed',
+                effectBefore: transformedEffects[0].from,
+                effectAfter: transformedEffects[0].to,
+                explanation: transformExplanation + (addedDefault ? ` + Added ${defaultEffect}` : '')
+            };
+        } else if (addedDefault) {
+            step = {
+                ingredientName: ingredient.name,
+                ingredientId: ingredient.id,
+                action: 'added',
+                effectAfter: defaultEffect,
+                explanation: `Added ${defaultEffect}`
+            };
+        } else if (defaultEffect) {
+            step = {
+                ingredientName: ingredient.name,
+                ingredientId: ingredient.id,
+                action: 'added',
+                effectAfter: defaultEffect,
+                explanation: `${defaultEffect} (already present, no change)`
+            };
+            warnings.push(`${ingredient.name}: ${defaultEffect} already present`);
+        } else if (!defaultEffect) {
+            warnings.push(`No default effect for: ${ingredient.name}`);
         }
 
         if (step) {
@@ -241,24 +256,35 @@ export function calculateMix(
     }
 
     // Calculate final price and addiction rating
-    let priceMultiplier = 1;
-    let addictionRating = 0;
+    // Calculate final price using the game formula:
+    // Sell Price = BasePrice * (1 + SumOfEffectMultipliers)
+    let effectMultiplierSum = 0;
 
+    // Start with base product addiction (e.g., Meth: 0.6, Cocaine: 0.4, Weed: 0)
+    let addictionRating = (baseProduct as any).addictionModifier || 0;
+
+    // Add addiction modifiers from effects and sum multipliers
     for (const effectName of currentEffects) {
         const effect = getEffectByName(effectName);
         if (effect) {
-            priceMultiplier *= effect.priceMultiplier;
+            effectMultiplierSum += effect.multiplier;
             addictionRating += effect.addictionModifier;
         }
     }
 
+    // Convert to percentage and round to 2 decimal places
+    // Formula: Total Addiction = Base Product Addiction + Sum(Effect Addiction Modifiers)
+    // Cap at 100%
+    const addictionPercentage = Math.round(Math.min(addictionRating, 1) * 100 * 100) / 100;
+
+    const priceMultiplier = 1 + effectMultiplierSum;
     const finalPrice = Math.round(baseProduct.basePrice * priceMultiplier);
-    const totalCost = baseProduct.basePrice + totalIngredientCost;
+    const totalCost = totalIngredientCost; // Only ingredient costs, not base product
     const profit = finalPrice - totalCost;
 
     // Generate product name based on effects
     // If no ingredients added, use base product name
-    const generatedName = ingredientIds.length > 0 
+    const generatedName = ingredientIds.length > 0
         ? generateProductName(currentEffects, baseProduct.category as 'weed' | 'meth' | 'cocaine')
         : baseProduct.name;
 
@@ -270,7 +296,7 @@ export function calculateMix(
         priceMultiplier: Math.round(priceMultiplier * 100) / 100,
         totalCost,
         profit,
-        addictionRating: Math.min(addictionRating, 100),
+        addictionRating: addictionPercentage,
         steps,
         warnings,
         productName: generatedName
@@ -333,26 +359,45 @@ export function getSuggestedIngredients(currentEffects: string[]): {
     }[] = [];
 
     for (const ingredient of ingredients) {
-        const transformation = transformations[ingredient.id];
-        if (!transformation) continue;
+        // Look up transformation rules by ingredient NAME
+        const transformationRules = transformations[ingredient.name];
+        const defaultEffect = (ingredient as any).effect || '';
 
-        // Check for transformations
-        for (const rule of transformation.rules) {
-            if (hasEffect(currentEffects, rule.if)) {
-                suggestions.push({
-                    ingredient,
-                    potentialResult: `${rule.if} → ${rule.becomes}`,
-                    type: 'transform'
-                });
-                break;
+        let foundTransformation = false;
+
+        if (transformationRules && Array.isArray(transformationRules)) {
+            // Check for transformations
+            for (const rule of transformationRules) {
+                const ifPresent = rule.ifPresent || [];
+                const ifNotPresent = rule.ifNotPresent || [];
+                const replace = rule.replace || {};
+
+                // Check if conditions would be met
+                const hasRequired = ifPresent.every((effect: string) => hasEffect(currentEffects, effect));
+                const notHasBlocked = ifNotPresent.every((effect: string) => !hasEffect(currentEffects, effect));
+
+                if (hasRequired && notHasBlocked) {
+                    // Get the first replacement
+                    const entries = Object.entries(replace);
+                    if (entries.length > 0) {
+                        const [oldEffect, newEffect] = entries[0];
+                        suggestions.push({
+                            ingredient,
+                            potentialResult: `${oldEffect} → ${newEffect}`,
+                            type: 'transform'
+                        });
+                        foundTransformation = true;
+                        break;
+                    }
+                }
             }
         }
 
-        // If no transformation, show default
-        if (!suggestions.find(s => s.ingredient.id === ingredient.id)) {
+        // If no transformation would apply, show default effect
+        if (!foundTransformation && defaultEffect) {
             suggestions.push({
                 ingredient,
-                potentialResult: `Add ${transformation.default}`,
+                potentialResult: `Add ${defaultEffect}`,
                 type: 'add'
             });
         }
