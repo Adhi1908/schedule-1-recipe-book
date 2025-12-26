@@ -1,76 +1,56 @@
-{
-  "products": [
+[
     {
-      "id": "og-kush",
-      "name": "OG Kush",
-      "category": "weed",
-      "baseEffects": ["Calming"],
-      "basePrice": 35,
-      "description": "A classic indica-dominant hybrid known for its stress-relieving effects.",
-      "unlockRequirement": "Available at start",
-      "patchVersion": "0.3",
-      "confidence": "confirmed",
-      "source": "Schedule 1 Wiki"
+        "id": "og-kush",
+        "name": "OG Kush",
+        "basePrice": 35,
+        "type": "weed",
+        "defaultEffect": "Calming",
+        "addictionModifier": 0,
+        "abbreviation": "OH"
     },
     {
-      "id": "sour-diesel",
-      "name": "Sour Diesel",
-      "category": "weed",
-      "baseEffects": ["Refreshing"],
-      "basePrice": 40,
-      "description": "A sativa-dominant strain with energizing and uplifting effects.",
-      "unlockRequirement": "Purchase from Albert Hoover",
-      "patchVersion": "0.3",
-      "confidence": "confirmed",
-      "source": "Schedule 1 Wiki"
+        "id": "sour-diesel",
+        "name": "Sour Diesel",
+        "basePrice": 35,
+        "type": "weed",
+        "defaultEffect": "Refreshing",
+        "addictionModifier": 0,
+        "abbreviation": "SL"
     },
     {
-      "id": "green-crack",
-      "name": "Green Crack",
-      "category": "weed",
-      "baseEffects": ["Energizing"],
-      "basePrice": 45,
-      "description": "A potent sativa with sharp energy and focus.",
-      "unlockRequirement": "Purchase from Albert Hoover",
-      "patchVersion": "0.3",
-      "confidence": "confirmed",
-      "source": "Schedule 1 Wiki"
+        "id": "green-crack",
+        "name": "Green Crack",
+        "basePrice": 35,
+        "type": "weed",
+        "defaultEffect": "Energizing",
+        "addictionModifier": 0,
+        "abbreviation": "GK"
     },
     {
-      "id": "granddaddy-purple",
-      "name": "Granddaddy Purple",
-      "category": "weed",
-      "baseEffects": ["Sedating"],
-      "basePrice": 50,
-      "description": "A famous indica strain with powerful relaxing properties.",
-      "unlockRequirement": "Purchase from Albert Hoover",
-      "patchVersion": "0.3",
-      "confidence": "confirmed",
-      "source": "Schedule 1 Wiki"
+        "id": "granddaddy-purple",
+        "name": "Granddaddy Purple",
+        "basePrice": 35,
+        "type": "weed",
+        "defaultEffect": "Sedating",
+        "addictionModifier": 0,
+        "abbreviation": "GE"
     },
     {
-      "id": "meth",
-      "name": "Methamphetamine",
-      "category": "meth",
-      "baseEffects": ["Electrifying"],
-      "basePrice": 70,
-      "description": "Crystal meth produced from pseudo, acid, and phosphorus.",
-      "unlockRequirement": "Requires Lab Station and Pseudo",
-      "patchVersion": "0.3",
-      "confidence": "confirmed",
-      "source": "Schedule 1 Wiki"
+        "id": "meth",
+        "name": "Meth",
+        "basePrice": 70,
+        "type": "stimulant",
+        "defaultEffect": null,
+        "addictionModifier": 0.6,
+        "abbreviation": "MH"
     },
     {
-      "id": "cocaine",
-      "name": "Cocaine",
-      "category": "cocaine",
-      "baseEffects": ["Energizing", "Euphoric"],
-      "basePrice": 150,
-      "description": "Processed from coca plants, a high-value product.",
-      "unlockRequirement": "Unlock Salvador Moreno supplier",
-      "patchVersion": "0.3",
-      "confidence": "confirmed",
-      "source": "Schedule 1 Wiki"
+        "id": "cocaine",
+        "name": "Cocaine",
+        "basePrice": 150,
+        "type": "stimulant",
+        "defaultEffect": null,
+        "addictionModifier": 0.4,
+        "abbreviation": "CE"
     }
-  ]
-}
+]

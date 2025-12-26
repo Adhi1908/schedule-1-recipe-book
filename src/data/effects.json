@@ -1,310 +1,342 @@
-{
-    "effects": [
-        {
-            "id": "anti-gravity",
-            "name": "Anti-Gravity",
-            "priceMultiplier": 1.54,
-            "addictionModifier": 0,
-            "description": "Causes the user to float upwards, defying gravity.",
-            "tier": "legendary",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "athletic",
-            "name": "Athletic",
-            "priceMultiplier": 1.32,
-            "addictionModifier": 0,
-            "description": "Enhances physical performance and endurance.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "balding",
-            "name": "Balding",
-            "priceMultiplier": 1.30,
-            "addictionModifier": 0,
-            "description": "May cause temporary hair loss.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "bright-eyed",
-            "name": "Bright-Eyed",
-            "priceMultiplier": 1.40,
-            "addictionModifier": 0,
-            "description": "Makes eyes appear brighter and more alert.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "calming",
-            "name": "Calming",
-            "priceMultiplier": 1.10,
-            "addictionModifier": 5,
-            "description": "Induces a state of relaxation and calmness.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "calorie-dense",
-            "name": "Calorie-Dense",
-            "priceMultiplier": 1.28,
-            "addictionModifier": 0,
-            "description": "Increases appetite significantly.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "cyclopean",
-            "name": "Cyclopean",
-            "priceMultiplier": 1.56,
-            "addictionModifier": 0,
-            "description": "Causes a one-eyed visual effect.",
-            "tier": "legendary",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "disorienting",
-            "name": "Disorienting",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "Causes confusion and disorientation.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "electrifying",
-            "name": "Electrifying",
-            "priceMultiplier": 1.50,
-            "addictionModifier": 10,
-            "description": "Creates an electric sensation throughout the body.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "energizing",
-            "name": "Energizing",
-            "priceMultiplier": 1.22,
-            "addictionModifier": 5,
-            "description": "Provides a boost of energy and alertness.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "euphoric",
-            "name": "Euphoric",
-            "priceMultiplier": 1.18,
-            "addictionModifier": 10,
-            "description": "Induces intense feelings of happiness and pleasure.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "explosive",
-            "name": "Explosive",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "May cause explosive reactions.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "focused",
-            "name": "Focused",
-            "priceMultiplier": 1.16,
-            "addictionModifier": 0,
-            "description": "Enhances concentration and focus.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "foggy",
-            "name": "Foggy",
-            "priceMultiplier": 1.36,
-            "addictionModifier": 0,
-            "description": "Creates a hazy, dreamlike state.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "gingeritis",
-            "name": "Gingeritis",
-            "priceMultiplier": 1.20,
-            "addictionModifier": 0,
-            "description": "Temporarily turns hair ginger-colored.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "glowing",
-            "name": "Glowing",
-            "priceMultiplier": 1.48,
-            "addictionModifier": 0,
-            "description": "Causes a radioactive glow effect.",
-            "tier": "legendary",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "jennerific",
-            "name": "Jennerific",
-            "priceMultiplier": 1.42,
-            "addictionModifier": 0,
-            "description": "Causes cosmetic enhancement effects.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "laxative",
-            "name": "Laxative",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "Causes digestive urgency.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "long-faced",
-            "name": "Long Faced",
-            "priceMultiplier": 1.52,
-            "addictionModifier": 0,
-            "description": "Elongates facial features temporarily.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "munchies",
-            "name": "Munchies",
-            "priceMultiplier": 1.12,
-            "addictionModifier": 0,
-            "description": "Causes extreme hunger and food cravings.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "paranoia",
-            "name": "Paranoia",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "Induces feelings of paranoia and anxiety.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "refreshing",
-            "name": "Refreshing",
-            "priceMultiplier": 1.14,
-            "addictionModifier": 0,
-            "description": "Provides a clean, refreshing sensation.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "schizophrenia",
-            "name": "Schizophrenia",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "Causes auditory and visual hallucinations.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "sedating",
-            "name": "Sedating",
-            "priceMultiplier": 1.26,
-            "addictionModifier": 5,
-            "description": "Induces drowsiness and sleepiness.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "seizure-inducing",
-            "name": "Seizure-Inducing",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "May cause seizure-like tremors.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "shrinking",
-            "name": "Shrinking",
-            "priceMultiplier": 1.60,
-            "addictionModifier": 0,
-            "description": "Causes a perception of shrinking.",
-            "tier": "legendary",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "slippery",
-            "name": "Slippery",
-            "priceMultiplier": 1.34,
-            "addictionModifier": 0,
-            "description": "Makes movement feel slick and smooth.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "smelly",
-            "name": "Smelly",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "Causes an unpleasant odor.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "sneaky",
-            "name": "Sneaky",
-            "priceMultiplier": 1.24,
-            "addictionModifier": 0,
-            "description": "Makes movements quieter and more stealthy.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "spicy",
-            "name": "Spicy",
-            "priceMultiplier": 1.38,
-            "addictionModifier": 0,
-            "description": "Creates a burning, spicy sensation.",
-            "tier": "common",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "thought-provoking",
-            "name": "Thought-Provoking",
-            "priceMultiplier": 1.44,
-            "addictionModifier": 0,
-            "description": "Stimulates deep introspective thinking.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "toxic",
-            "name": "Toxic",
-            "priceMultiplier": 1.00,
-            "addictionModifier": 0,
-            "description": "Causes toxic effects on the body.",
-            "tier": "negative",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "tropic-thunder",
-            "name": "Tropic Thunder",
-            "priceMultiplier": 1.46,
-            "addictionModifier": 0,
-            "description": "Creates tropical hallucinations.",
-            "tier": "rare",
-            "confidence": "confirmed"
-        },
-        {
-            "id": "zombifying",
-            "name": "Zombifying",
-            "priceMultiplier": 1.58,
-            "addictionModifier": 0,
-            "description": "Creates zombie-like movements and behavior.",
-            "tier": "legendary",
-            "confidence": "confirmed"
-        }
-    ]
-}
+[
+    {
+        "id": "paranoia",
+        "name": "Paranoia",
+        "code": "Pa",
+        "tier": 1,
+        "multiplier": 0,
+        "color": "#f87171",
+        "addictionModifier": 0,
+        "description": "Induces paranoia in the user."
+    },
+    {
+        "id": "smelly",
+        "name": "Smelly",
+        "code": "Sm",
+        "tier": 1,
+        "multiplier": 0,
+        "color": "#84cc16",
+        "addictionModifier": 0,
+        "description": "Makes the user unbearably smelly."
+    },
+    {
+        "id": "calming",
+        "name": "Calming",
+        "code": "Ca",
+        "tier": 1,
+        "multiplier": 0.10,
+        "color": "#fdba74",
+        "addictionModifier": 0,
+        "description": "Induces a slight calmness in the user."
+    },
+    {
+        "id": "munchies",
+        "name": "Munchies",
+        "code": "Mu",
+        "tier": 1,
+        "multiplier": 0.12,
+        "color": "#C96E57",
+        "addictionModifier": 0.096,
+        "description": "Makes the user hungry."
+    },
+    {
+        "id": "refreshing",
+        "name": "Refreshing",
+        "code": "Re",
+        "tier": 1,
+        "multiplier": 0.14,
+        "color": "#bef264",
+        "addictionModifier": 0.104,
+        "description": "Slightly energizes the user."
+    },
+    {
+        "id": "focused",
+        "name": "Focused",
+        "code": "Fc",
+        "tier": 1,
+        "multiplier": 0.16,
+        "color": "#75F1FD",
+        "addictionModifier": 0.104,
+        "description": "Focuses the user's mind."
+    },
+    {
+        "id": "euphoric",
+        "name": "Euphoric",
+        "code": "Eu",
+        "tier": 1,
+        "multiplier": 0.18,
+        "color": "#fde68a",
+        "addictionModifier": 0.235,
+        "description": "Induces mild euphoria in the user."
+    },
+    {
+        "id": "toxic",
+        "name": "Toxic",
+        "code": "To",
+        "tier": 2,
+        "multiplier": 0,
+        "color": "#a3e635",
+        "addictionModifier": 0,
+        "description": "Damages the user's liver and induces vomiting."
+    },
+    {
+        "id": "disorienting",
+        "name": "Disorienting",
+        "code": "Di",
+        "tier": 2,
+        "multiplier": 0,
+        "color": "#FE7551",
+        "addictionModifier": 0,
+        "description": "Causes unpredictable movement and slight visual impairment in the user."
+    },
+    {
+        "id": "gingeritis",
+        "name": "Gingeritis",
+        "code": "Gi",
+        "tier": 2,
+        "multiplier": 0.20,
+        "color": "#fb923c",
+        "addictionModifier": 0,
+        "description": "After consumption, the user will become a ginger."
+    },
+    {
+        "id": "energizing",
+        "name": "Energizing",
+        "code": "En",
+        "tier": 2,
+        "multiplier": 0.22,
+        "color": "#a3e635",
+        "addictionModifier": 0.34,
+        "description": "Increases the users energy."
+    },
+    {
+        "id": "sneaky",
+        "name": "Sneaky",
+        "code": "Sn",
+        "tier": 2,
+        "multiplier": 0.24,
+        "color": "#a8a29e",
+        "addictionModifier": 0.327,
+        "description": "Silences the users foot steps."
+    },
+    {
+        "id": "sedating",
+        "name": "Sedating",
+        "code": "Se",
+        "tier": 2,
+        "multiplier": 0.26,
+        "color": "#818cf8",
+        "addictionModifier": 0,
+        "description": "Induces heavy sleepiness in the user."
+    },
+    {
+        "id": "calorie-dense",
+        "name": "Calorie-Dense",
+        "code": "Cd",
+        "tier": 2,
+        "multiplier": 0.28,
+        "color": "#e879f9",
+        "addictionModifier": 0.1,
+        "description": "Results in immediate weight gain."
+    },
+    {
+        "id": "laxative",
+        "name": "Laxative",
+        "code": "La",
+        "tier": 3,
+        "multiplier": 0,
+        "color": "#a16207",
+        "addictionModifier": 0.1,
+        "description": "Causes the user to fart and shit uncontrollably."
+    },
+    {
+        "id": "seizure-inducing",
+        "name": "Seizure-Inducing",
+        "code": "Si",
+        "tier": 3,
+        "multiplier": 0,
+        "color": "#FEE900",
+        "addictionModifier": 0,
+        "description": "Consumption results in an instant seizure."
+    },
+    {
+        "id": "balding",
+        "name": "Balding",
+        "code": "Ba",
+        "tier": 3,
+        "multiplier": 0.30,
+        "color": "#c79232",
+        "addictionModifier": 0,
+        "description": "Causes balding in the user."
+    },
+    {
+        "id": "athletic",
+        "name": "Athletic",
+        "code": "At",
+        "tier": 3,
+        "multiplier": 0.32,
+        "color": "#7dd3fc",
+        "addictionModifier": 0.607,
+        "description": "After consumption, the user is only able to run."
+    },
+    {
+        "id": "slippery",
+        "name": "Slippery",
+        "code": "Sl",
+        "tier": 3,
+        "multiplier": 0.34,
+        "color": "#7dd3fc",
+        "addictionModifier": 0.309,
+        "description": "Reduces the user's ability to maintain traction on the ground."
+    },
+    {
+        "id": "foggy",
+        "name": "Foggy",
+        "code": "Fo",
+        "tier": 3,
+        "multiplier": 0.36,
+        "color": "#94a3b8",
+        "addictionModifier": 0.1,
+        "description": "Causes a cloud of fog to form around the user."
+    },
+    {
+        "id": "spicy",
+        "name": "Spicy",
+        "code": "Sp",
+        "tier": 3,
+        "multiplier": 0.38,
+        "color": "#f87171",
+        "addictionModifier": 0.665,
+        "description": "Consumption results in the user's eyes turning blue."
+    },
+    {
+        "id": "schizophrenia",
+        "name": "Schizophrenia",
+        "code": "Sc",
+        "tier": 4,
+        "multiplier": 0,
+        "color": "#645AFD",
+        "addictionModifier": 0,
+        "description": "Induces hallucinations and unpredictable behaviour in the user."
+    },
+    {
+        "id": "bright-eyed",
+        "name": "Bright-Eyed",
+        "code": "Be",
+        "tier": 4,
+        "multiplier": 0.40,
+        "color": "#67e8f9",
+        "addictionModifier": 0.2,
+        "description": "Causes the user's eyes to emit light."
+    },
+    {
+        "id": "jennerising",
+        "name": "Jennerising",
+        "code": "Je",
+        "tier": 4,
+        "multiplier": 0.42,
+        "color": "#e879f9",
+        "addictionModifier": 0.343,
+        "description": "Inverts the user's gender."
+    },
+    {
+        "id": "thought-provoking",
+        "name": "Thought-Provoking",
+        "code": "Tp",
+        "tier": 4,
+        "multiplier": 0.44,
+        "color": "#f9a8d4",
+        "addictionModifier": 0.37,
+        "description": "Increases the size of the user's head."
+    },
+    {
+        "id": "tropic-thunder",
+        "name": "Tropic Thunder",
+        "code": "Tt",
+        "tier": 4,
+        "multiplier": 0.46,
+        "color": "#fdba74",
+        "addictionModifier": 0.803,
+        "description": "Inverts the user's skin color."
+    },
+    {
+        "id": "glowing",
+        "name": "Glowing",
+        "code": "Gl",
+        "tier": 4,
+        "multiplier": 0.48,
+        "color": "#85E459",
+        "addictionModifier": 0.472,
+        "description": "Imbues a bioluminescence on the user."
+    },
+    {
+        "id": "explosive",
+        "name": "Explosive",
+        "code": "Ex",
+        "tier": 5,
+        "multiplier": 0,
+        "color": "#ef4444",
+        "addictionModifier": 0,
+        "description": "Causes the user to explode shortly after consumption."
+    },
+    {
+        "id": "electrifying",
+        "name": "Electrifying",
+        "code": "El",
+        "tier": 5,
+        "multiplier": 0.50,
+        "color": "#22d3ee",
+        "addictionModifier": 0.235,
+        "description": "Electrifies the user, causing arcs of electricity to be emitted, zapping anyone nearby."
+    },
+    {
+        "id": "long-faced",
+        "name": "Long Faced",
+        "code": "Lf",
+        "tier": 5,
+        "multiplier": 0.52,
+        "color": "#fde047",
+        "addictionModifier": 0.607,
+        "description": "Considerably increases the size of the user's head and neck."
+    },
+    {
+        "id": "anti-gravity",
+        "name": "Anti-Gravity",
+        "code": "Ag",
+        "tier": 5,
+        "multiplier": 0.54,
+        "color": "#3b82f6",
+        "addictionModifier": 0.611,
+        "description": "Weakens the effects of gravity on the user."
+    },
+    {
+        "id": "cyclopean",
+        "name": "Cyclopean",
+        "code": "Cy",
+        "tier": 5,
+        "multiplier": 0.56,
+        "color": "#FEC174",
+        "addictionModifier": 0.1,
+        "description": "Causes the user to see with a single eye in the center of their forehead."
+    },
+    {
+        "id": "zombifying",
+        "name": "Zombifying",
+        "code": "Zo",
+        "tier": 5,
+        "multiplier": 0.58,
+        "color": "#71AB5D",
+        "addictionModifier": 0.598,
+        "description": "Transforms the user into a zombie, causing them to walk with a limp and seek brains."
+    },
+    {
+        "id": "shrinking",
+        "name": "Shrinking",
+        "code": "Sh",
+        "tier": 5,
+        "multiplier": 0.60,
+        "color": "#B6FEDA",
+        "addictionModifier": 0.336,
+        "description": "Shrinks the user."
+    }
+]
