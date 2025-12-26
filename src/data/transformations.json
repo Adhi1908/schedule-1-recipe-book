@@ -1,0 +1,421 @@
+{
+    "transformations": {
+        "paracetamol": {
+            "default": "Sneaky",
+            "rules": [
+                {
+                    "if": "Munchies",
+                    "becomes": "Anti-Gravity"
+                },
+                {
+                    "if": "Spicy",
+                    "becomes": "Bright-Eyed"
+                },
+                {
+                    "if": "Foggy",
+                    "becomes": "Calming"
+                },
+                {
+                    "if": "Glowing",
+                    "becomes": "Toxic"
+                },
+                {
+                    "if": "Toxic",
+                    "becomes": "Tropic Thunder"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "banana": {
+            "default": "Gingeritis",
+            "rules": [
+                {
+                    "if": "Energizing",
+                    "becomes": "Thought-Provoking"
+                },
+                {
+                    "if": "Calming",
+                    "becomes": "Sneaky"
+                },
+                {
+                    "if": "Toxic",
+                    "becomes": "Smelly"
+                },
+                {
+                    "if": "Long Faced",
+                    "becomes": "Refreshing"
+                },
+                {
+                    "if": "Cyclopean",
+                    "becomes": "Thought-Provoking"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Schedule 1 Wiki"
+        },
+        "gasoline": {
+            "default": "Toxic",
+            "rules": [
+                {
+                    "if": "Energizing",
+                    "becomes": "Euphoric"
+                },
+                {
+                    "if": "Paranoia",
+                    "becomes": "Calming"
+                },
+                {
+                    "if": "Munchies",
+                    "becomes": "Focused"
+                },
+                {
+                    "if": "Gingeritis",
+                    "becomes": "Smelly"
+                },
+                {
+                    "if": "Disorienting",
+                    "becomes": "Electrifying"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "mouthwash": {
+            "default": "Balding",
+            "rules": [
+                {
+                    "if": "Calming",
+                    "becomes": "Anti-Gravity"
+                },
+                {
+                    "if": "Calorie-Dense",
+                    "becomes": "Sneaky"
+                },
+                {
+                    "if": "Focused",
+                    "becomes": "Jennerific"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Dexerto Guide"
+        },
+        "cuke": {
+            "default": "Energizing",
+            "rules": [
+                {
+                    "if": "Toxic",
+                    "becomes": "Euphoric"
+                },
+                {
+                    "if": "Slippery",
+                    "becomes": "Munchies"
+                },
+                {
+                    "if": "Sneaky",
+                    "becomes": "Paranoia"
+                },
+                {
+                    "if": "Foggy",
+                    "becomes": "Cyclopean"
+                },
+                {
+                    "if": "Explosive",
+                    "becomes": "Focused"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "GameRant Guide"
+        },
+        "battery": {
+            "default": "Bright-Eyed",
+            "rules": [
+                {
+                    "if": "Munchies",
+                    "becomes": "Tropic Thunder"
+                },
+                {
+                    "if": "Euphoric",
+                    "becomes": "Zombifying"
+                },
+                {
+                    "if": "Cyclopean",
+                    "becomes": "Glowing"
+                },
+                {
+                    "if": "Spicy",
+                    "becomes": "Disorienting"
+                },
+                {
+                    "if": "Electrifying",
+                    "becomes": "Zombifying"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "mega-bean": {
+            "default": "Foggy",
+            "rules": [
+                {
+                    "if": "Calming",
+                    "becomes": "Glowing"
+                },
+                {
+                    "if": "Energizing",
+                    "becomes": "Cyclopean"
+                },
+                {
+                    "if": "Thought-Provoking",
+                    "becomes": "Electrifying"
+                },
+                {
+                    "if": "Athletic",
+                    "becomes": "Laxative"
+                },
+                {
+                    "if": "Sneaky",
+                    "becomes": "Calming"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Schedule 1 Wiki"
+        },
+        "chili": {
+            "default": "Spicy",
+            "rules": [
+                {
+                    "if": "Toxic",
+                    "becomes": "Long Faced"
+                },
+                {
+                    "if": "Anti-Gravity",
+                    "becomes": "Tropic Thunder"
+                },
+                {
+                    "if": "Athletic",
+                    "becomes": "Euphoric"
+                },
+                {
+                    "if": "Munchies",
+                    "becomes": "Thought-Provoking"
+                },
+                {
+                    "if": "Sneaky",
+                    "becomes": "Bright-Eyed"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "flu-medicine": {
+            "default": "Sedating",
+            "rules": [
+                {
+                    "if": "Focused",
+                    "becomes": "Calming"
+                },
+                {
+                    "if": "Energizing",
+                    "becomes": "Refreshing"
+                },
+                {
+                    "if": "Electrifying",
+                    "becomes": "Munchies"
+                },
+                {
+                    "if": "Calorie-Dense",
+                    "becomes": "Slippery"
+                },
+                {
+                    "if": "Cyclopean",
+                    "becomes": "Foggy"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "GameRant Guide"
+        },
+        "energy-drink": {
+            "default": "Athletic",
+            "rules": [
+                {
+                    "if": "Spicy",
+                    "becomes": "Euphoric"
+                },
+                {
+                    "if": "Sedating",
+                    "becomes": "Munchies"
+                },
+                {
+                    "if": "Glowing",
+                    "becomes": "Disorienting"
+                },
+                {
+                    "if": "Foggy",
+                    "becomes": "Laxative"
+                },
+                {
+                    "if": "Schizophrenia",
+                    "becomes": "Balding"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "iodine": {
+            "default": "Jennerific",
+            "rules": [
+                {
+                    "if": "Calorie-Dense",
+                    "becomes": "Gingeritis"
+                },
+                {
+                    "if": "Foggy",
+                    "becomes": "Paranoia"
+                },
+                {
+                    "if": "Sneaky",
+                    "becomes": "Tropic Thunder"
+                },
+                {
+                    "if": "Calming",
+                    "becomes": "Balding"
+                },
+                {
+                    "if": "Euphoric",
+                    "becomes": "Seizure-Inducing"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Schedule 1 Wiki"
+        },
+        "horse-semen": {
+            "default": "Long Faced",
+            "rules": [
+                {
+                    "if": "Anti-Gravity",
+                    "becomes": "Calming"
+                },
+                {
+                    "if": "Gingeritis",
+                    "becomes": "Refreshing"
+                },
+                {
+                    "if": "Thought-Provoking",
+                    "becomes": "Electrifying"
+                },
+                {
+                    "if": "Sedating",
+                    "becomes": "Bright-Eyed"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "motor-oil": {
+            "default": "Slippery",
+            "rules": [
+                {
+                    "if": "Energizing",
+                    "becomes": "Munchies"
+                },
+                {
+                    "if": "Paranoia",
+                    "becomes": "Anti-Gravity"
+                },
+                {
+                    "if": "Munchies",
+                    "becomes": "Schizophrenia"
+                },
+                {
+                    "if": "Foggy",
+                    "becomes": "Toxic"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "GameRant Guide"
+        },
+        "donut": {
+            "default": "Calorie-Dense",
+            "rules": [
+                {
+                    "if": "Munchies",
+                    "becomes": "Calming"
+                },
+                {
+                    "if": "Focused",
+                    "becomes": "Euphoric"
+                },
+                {
+                    "if": "Energizing",
+                    "becomes": "Balding"
+                },
+                {
+                    "if": "Anti-Gravity",
+                    "becomes": "Slippery"
+                },
+                {
+                    "if": "Paranoia",
+                    "becomes": "Jennerific"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Schedule 1 Wiki"
+        },
+        "viagra": {
+            "default": "Tropic Thunder",
+            "rules": [
+                {
+                    "if": "Athletic",
+                    "becomes": "Sneaky"
+                },
+                {
+                    "if": "Toxic",
+                    "becomes": "Euphoric"
+                },
+                {
+                    "if": "Euphoric",
+                    "becomes": "Bright-Eyed"
+                },
+                {
+                    "if": "Laxative",
+                    "becomes": "Calming"
+                },
+                {
+                    "if": "Disorienting",
+                    "becomes": "Electrifying"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Steam Community Guide"
+        },
+        "addy": {
+            "default": "Thought-Provoking",
+            "rules": [
+                {
+                    "if": "Sedating",
+                    "becomes": "Gingeritis"
+                },
+                {
+                    "if": "Foggy",
+                    "becomes": "Electrifying"
+                },
+                {
+                    "if": "Explosive",
+                    "becomes": "Focused"
+                },
+                {
+                    "if": "Long Faced",
+                    "becomes": "Refreshing"
+                }
+            ],
+            "confidence": "confirmed",
+            "source": "Schedule 1 Wiki"
+        }
+    },
+    "meta": {
+        "maxEffects": 8,
+        "patchVersion": "0.3",
+        "lastUpdated": "2025-12-26"
+    }
+}

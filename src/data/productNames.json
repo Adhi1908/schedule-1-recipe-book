@@ -1,0 +1,411 @@
+{
+    "productNames": {
+        "description": "Product names in Schedule 1 are generated based on the effects present in the mix. This file maps effect combinations to final product names.",
+        "patchVersion": "0.3",
+        "lastUpdated": "2025-12-26",
+        "namingRules": [
+            {
+                "effects": [
+                    "Anti-Gravity"
+                ],
+                "namePrefix": [
+                    "Astro",
+                    "Zero-G",
+                    "Floating",
+                    "Lunar",
+                    "Galaxy"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Athletic"
+                ],
+                "namePrefix": [
+                    "Speed",
+                    "Sprint",
+                    "Turbo",
+                    "Rush",
+                    "Bolt"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Zombifying"
+                ],
+                "namePrefix": [
+                    "Zombie",
+                    "Undead",
+                    "Walker",
+                    "Flesh"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Glowing"
+                ],
+                "namePrefix": [
+                    "Glow",
+                    "Neon",
+                    "Radiant",
+                    "Luminous"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Euphoric"
+                ],
+                "namePrefix": [
+                    "Bliss",
+                    "Heaven",
+                    "Cloud",
+                    "Paradise"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Electrifying"
+                ],
+                "namePrefix": [
+                    "Electric",
+                    "Thunder",
+                    "Lightning",
+                    "Spark"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Toxic"
+                ],
+                "namePrefix": [
+                    "Poison",
+                    "Venom",
+                    "Hazard"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Sedating"
+                ],
+                "namePrefix": [
+                    "Dream",
+                    "Sleep",
+                    "Night",
+                    "Mellow"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Energizing"
+                ],
+                "namePrefix": [
+                    "Hyper",
+                    "Active",
+                    "Power",
+                    "Boost"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Thought-Provoking"
+                ],
+                "namePrefix": [
+                    "Mind",
+                    "Brain",
+                    "Genius",
+                    "Think"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Calming"
+                ],
+                "namePrefix": [
+                    "Chill",
+                    "Zen",
+                    "Peace",
+                    "Serene"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Sneaky"
+                ],
+                "namePrefix": [
+                    "Shadow",
+                    "Stealth",
+                    "Ghost",
+                    "Ninja"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Balding"
+                ],
+                "namePrefix": [
+                    "Chrome",
+                    "Smooth",
+                    "Bald"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Gingeritis"
+                ],
+                "namePrefix": [
+                    "Ginger",
+                    "Red",
+                    "Fire",
+                    "Flame"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Spicy"
+                ],
+                "namePrefix": [
+                    "Hot",
+                    "Spicy",
+                    "Pepper",
+                    "Chili"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Foggy"
+                ],
+                "namePrefix": [
+                    "Haze",
+                    "Mist",
+                    "Fog",
+                    "Cloud"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Long Faced"
+                ],
+                "namePrefix": [
+                    "Long",
+                    "Horse",
+                    "Stretch"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Tropic Thunder"
+                ],
+                "namePrefix": [
+                    "Tropic",
+                    "Tropical",
+                    "Thunder"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Bright-Eyed"
+                ],
+                "namePrefix": [
+                    "Bright",
+                    "Alert",
+                    "Wide",
+                    "Awake"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Jennerific"
+                ],
+                "namePrefix": [
+                    "Glam",
+                    "Beauty",
+                    "Pretty"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Cyclopean"
+                ],
+                "namePrefix": [
+                    "Cyclops",
+                    "One-Eye",
+                    "Mono"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Refreshing"
+                ],
+                "namePrefix": [
+                    "Fresh",
+                    "Cool",
+                    "Crisp",
+                    "Mint"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Slippery"
+                ],
+                "namePrefix": [
+                    "Slick",
+                    "Oil",
+                    "Slide"
+                ],
+                "confidence": "confirmed"
+            },
+            {
+                "effects": [
+                    "Shrinking"
+                ],
+                "namePrefix": [
+                    "Mini",
+                    "Tiny",
+                    "Micro",
+                    "Shrink"
+                ],
+                "confidence": "confirmed"
+            }
+        ],
+        "nameSuffixes": {
+            "weed": [
+                "Kush",
+                "Haze",
+                "Dream",
+                "OG",
+                "Bud",
+                "Green",
+                "Leaf",
+                "Herb",
+                "Grass",
+                "Fruit"
+            ],
+            "meth": [
+                "Crystal",
+                "Ice",
+                "Diamond",
+                "Glass",
+                "Shard",
+                "Rock"
+            ],
+            "cocaine": [
+                "Snow",
+                "White",
+                "Powder",
+                "Dust",
+                "Glacier",
+                "Frost"
+            ]
+        },
+        "knownProductNames": {
+            "description": "Specific effect combinations that produce known product names in-game",
+            "names": [
+                {
+                    "effects": [
+                        "Athletic",
+                        "Anti-Gravity",
+                        "Balding"
+                    ],
+                    "name": "Death Fruit",
+                    "confidence": "confirmed",
+                    "source": "YouTube Guide"
+                },
+                {
+                    "effects": [
+                        "Sneaky",
+                        "Athletic",
+                        "Anti-Gravity"
+                    ],
+                    "name": "Granddaddy Fuel",
+                    "confidence": "confirmed",
+                    "source": "YouTube Guide"
+                },
+                {
+                    "effects": [
+                        "Anti-Gravity",
+                        "Cyclopean",
+                        "Glowing"
+                    ],
+                    "name": "Alien OG",
+                    "confidence": "confirmed",
+                    "source": "Community Verified"
+                },
+                {
+                    "effects": [
+                        "Sneaky",
+                        "Tropic Thunder"
+                    ],
+                    "name": "Tropical Shadow",
+                    "confidence": "unconfirmed",
+                    "source": "Calculated"
+                },
+                {
+                    "effects": [
+                        "Euphoric",
+                        "Zombifying"
+                    ],
+                    "name": "Paradise Walker",
+                    "confidence": "unconfirmed",
+                    "source": "Calculated"
+                },
+                {
+                    "effects": [
+                        "Electrifying",
+                        "Thought-Provoking"
+                    ],
+                    "name": "Lightning Mind",
+                    "confidence": "unconfirmed",
+                    "source": "Calculated"
+                },
+                {
+                    "effects": [
+                        "Athletic",
+                        "Anti-Gravity"
+                    ],
+                    "name": "Speed Runner",
+                    "confidence": "confirmed",
+                    "source": "Community Verified"
+                },
+                {
+                    "effects": [
+                        "Sedating",
+                        "Calming"
+                    ],
+                    "name": "Deep Sleep",
+                    "confidence": "unconfirmed",
+                    "source": "Calculated"
+                },
+                {
+                    "effects": [
+                        "Energizing",
+                        "Bright-Eyed"
+                    ],
+                    "name": "Wide Awake",
+                    "confidence": "unconfirmed",
+                    "source": "Calculated"
+                }
+            ]
+        }
+    }
+}
