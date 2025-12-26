@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { getAllProducts, getAllIngredients, calculateMix } from '@/lib/mixEngine';
 import EffectBadge from '@/components/EffectBadge';
 import ConfidenceIndicator from '@/components/ConfidenceIndicator';
-import { BookOpen, Search, ArrowRight, Copy, Check, TrendingUp, Beaker } from 'lucide-react';
+import { BookOpen, Search, ArrowRight, Copy, Check, TrendingUp, Beaker, ArrowUpDown, ChevronDown } from 'lucide-react';
 import { cn, copyToClipboard, generateMixUrl } from '@/lib/utils';
 
 // Pre-defined popular recipes (community verified)
@@ -225,6 +225,20 @@ export default function RecipesPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const [copiedId, setCopiedId] = useState<string | null>(null);
+    const [sortBy, setSortBy] = useState<string>('default');
+    const [showSortDropdown, setShowSortDropdown] = useState(false);
+
+    const sortOptions = [
+        { id: 'default', label: 'Default Order' },
+        { id: 'price-low', label: 'Price: Low to High' },
+        { id: 'price-high', label: 'Price: High to Low' },
+        { id: 'profit-high', label: 'Profit: High to Low' },
+        { id: 'profit-low', label: 'Profit: Low to High' },
+        { id: 'effects-high', label: 'Most Effects' },
+        { id: 'effects-low', label: 'Fewest Effects' },
+        { id: 'ingredients-low', label: 'Fewest Ingredients' },
+        { id: 'ingredients-high', label: 'Most Ingredients' },
+    ];
 
     const products = getAllProducts();
     const ingredients = getAllIngredients();
@@ -261,6 +275,30 @@ export default function RecipesPage() {
         );
         const matchesCategory = selectedCategory === 'all' || recipe.category === selectedCategory;
         return matchesSearch && matchesCategory;
+    });
+
+    // Sort recipes
+    const sortedRecipes = [...filteredRecipes].sort((a, b) => {
+        switch (sortBy) {
+            case 'price-low':
+                return a.result.finalPrice - b.result.finalPrice;
+            case 'price-high':
+                return b.result.finalPrice - a.result.finalPrice;
+            case 'profit-high':
+                return b.result.profit - a.result.profit;
+            case 'profit-low':
+                return a.result.profit - b.result.profit;
+            case 'effects-high':
+                return b.result.effects.length - a.result.effects.length;
+            case 'effects-low':
+                return a.result.effects.length - b.result.effects.length;
+            case 'ingredients-low':
+                return a.ingredients.length - b.ingredients.length;
+            case 'ingredients-high':
+                return b.ingredients.length - a.ingredients.length;
+            default:
+                return 0;
+        }
     });
 
     // Handle copy
@@ -324,9 +362,47 @@ export default function RecipesPage() {
                 />
             </div>
 
+            {/* Sort Dropdown */}
+            <div className="flex items-center justify-between mb-6">
+                <p className="text-sm text-zinc-500">
+                    Showing {sortedRecipes.length} recipes
+                </p>
+                <div className="relative">
+                    <button
+                        onClick={() => setShowSortDropdown(!showSortDropdown)}
+                        className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-800 text-zinc-300 hover:bg-zinc-700 hover:text-white transition-all text-sm"
+                    >
+                        <ArrowUpDown className="h-4 w-4" />
+                        {sortOptions.find(o => o.id === sortBy)?.label || 'Sort'}
+                        <ChevronDown className={cn('h-4 w-4 transition-transform', showSortDropdown && 'rotate-180')} />
+                    </button>
+                    {showSortDropdown && (
+                        <div className="absolute right-0 top-full mt-2 w-48 py-2 rounded-lg bg-zinc-800 border border-zinc-700 shadow-xl z-50">
+                            {sortOptions.map(option => (
+                                <button
+                                    key={option.id}
+                                    onClick={() => {
+                                        setSortBy(option.id);
+                                        setShowSortDropdown(false);
+                                    }}
+                                    className={cn(
+                                        'w-full px-4 py-2 text-left text-sm transition-colors',
+                                        sortBy === option.id
+                                            ? 'bg-blue-500/20 text-blue-400'
+                                            : 'text-zinc-300 hover:bg-zinc-700 hover:text-white'
+                                    )}
+                                >
+                                    {option.label}
+                                </button>
+                            ))}
+                        </div>
+                    )}
+                </div>
+            </div>
+
             {/* Recipes Grid */}
             <div className="grid md:grid-cols-2 gap-6">
-                {filteredRecipes.map((recipe) => (
+                {sortedRecipes.map((recipe) => (
                     <div
                         key={recipe.id}
                         className="p-6 rounded-xl bg-gradient-to-br from-zinc-900 to-zinc-950 border border-zinc-800 hover:border-zinc-700 transition-all"
@@ -441,7 +517,7 @@ export default function RecipesPage() {
                 ))}
             </div>
 
-            {filteredRecipes.length === 0 && (
+            {sortedRecipes.length === 0 && (
                 <div className="text-center py-16">
                     <BookOpen className="h-12 w-12 text-zinc-600 mx-auto mb-4" />
                     <h3 className="text-lg font-medium text-zinc-400">No recipes found</h3>
