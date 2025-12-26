@@ -18,7 +18,7 @@ export interface Ingredient {
   id: string;
   name: string;
   defaultEffect: string;
-  cost: number;
+  price: number;
   source: string;
   patchVersion: string;
   confidence: 'confirmed' | 'unconfirmed';

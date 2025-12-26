@@ -1,22 +1,26 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { getAllProducts, getAllIngredients, calculateMix } from '@/lib/mixEngine';
 import EffectBadge from '@/components/EffectBadge';
 import ConfidenceIndicator from '@/components/ConfidenceIndicator';
-import { BookOpen, Search, ArrowRight, Copy, Check, TrendingUp, Beaker, ArrowUpDown, ChevronDown } from 'lucide-react';
+import { BookOpen, Search, ArrowRight, Copy, Check, TrendingUp, Beaker, ArrowUpDown, ChevronDown, Plus, ThumbsUp, Users } from 'lucide-react';
 import { cn, copyToClipboard, generateMixUrl } from '@/lib/utils';
+import { useAuth } from '@/contexts/AuthContext';
+import SubmitRecipeModal from '@/components/recipes/SubmitRecipeModal';
+import LoginModal from '@/components/auth/LoginModal';
+import { getUserRecipes, upvoteRecipe, UserRecipe } from '@/lib/recipeService';
 
 // Pre-defined popular recipes (community verified)
 const popularRecipes = [
     // === TOP PROFIT MIXES (Verified Best Sell Prices) ===
     {
-        id: 'ultimate-cocaine',
-        name: 'Ultimate Cocaine',
-        description: '💎 BEST COCAINE - 8 effects, max sell price ~$500+',
+        id: 'verified-735-cocaine',
+        name: 'Cocaine $735 Mix',
+        description: '💎 VERIFIED BEST - $735 sell price, $693 profit, 8 effects',
         baseProduct: 'cocaine',
-        ingredients: ['cuke', 'gasoline', 'paracetamol', 'mega-bean', 'addy', 'battery', 'chili', 'banana'],
+        ingredients: ['motor-oil', 'cuke', 'paracetamol', 'gasoline', 'cuke', 'battery', 'horse-semen', 'mega-bean'],
         confidence: 'confirmed' as const,
         source: 'Community Verified',
         category: 'Top Profit'
@@ -309,8 +313,21 @@ export default function RecipesPage() {
     const [copiedId, setCopiedId] = useState<string | null>(null);
     const [sortBy, setSortBy] = useState<string>('default');
     const [showSortDropdown, setShowSortDropdown] = useState(false);
+    const [showSubmitModal, setShowSubmitModal] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [userRecipes, setUserRecipes] = useState<UserRecipe[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const RECIPES_PER_PAGE = 6;
+    const { user } = useAuth();
+
+    // Fetch user recipes on mount
+    useEffect(() => {
+        const fetchRecipes = async () => {
+            const recipes = await getUserRecipes();
+            setUserRecipes(recipes);
+        };
+        fetchRecipes();
+    }, []);
 
     const sortOptions = [
         { id: 'default', label: 'Default Order' },
@@ -330,8 +347,23 @@ export default function RecipesPage() {
     // Get unique categories
     const categories = ['all', ...new Set(popularRecipes.map(r => r.category))];
 
+    // Combine popular recipes with user recipes
+    const allRecipes = [
+        ...popularRecipes,
+        ...userRecipes.map(r => ({
+            id: r.id || '',
+            name: r.name,
+            description: r.description,
+            baseProduct: r.baseProduct,
+            ingredients: r.ingredients,
+            confidence: (r.verified ? 'confirmed' : 'unconfirmed') as 'confirmed' | 'unconfirmed',
+            source: `User: ${r.userName}`,
+            category: 'Community'
+        }))
+    ];
+
     // Calculate results for each recipe
-    const recipesWithResults = popularRecipes.map(recipe => {
+    const recipesWithResults = allRecipes.map(recipe => {
         const result = calculateMix(recipe.baseProduct, recipe.ingredients);
         const baseProductObj = products.find(p => p.id === recipe.baseProduct);
         const ingredientObjects = recipe.ingredients.map(id =>
@@ -425,11 +457,57 @@ export default function RecipesPage() {
                         Popular community-verified mixes for every play style
                     </p>
                 </div>
+                <button
+                    onClick={() => {
+                        if (user) {
+                            setShowSubmitModal(true);
+                        } else {
+                            setShowLoginModal(true);
+                        }
+                    }}
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 text-white font-medium hover:from-green-600 hover:to-emerald-600 transition-all shadow-lg shadow-green-500/20"
+                >
+                    <Plus className="h-5 w-5" />
+                    Submit Recipe
+                </button>
             </div>
 
             {/* Category Filter */}
             <div className="flex flex-wrap gap-2 mb-6">
-                {categories.map((category) => (
+                <button
+                    onClick={() => handleCategoryChange('all')}
+                    className={cn(
+                        'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                        selectedCategory === 'all'
+                            ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                            : 'bg-zinc-800/50 text-zinc-400 border border-zinc-700 hover:bg-zinc-800 hover:text-zinc-300'
+                    )}
+                >
+                    All Recipes
+                </button>
+                <button
+                    onClick={() => handleCategoryChange('Top Profit')}
+                    className={cn(
+                        'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                        selectedCategory === 'Top Profit'
+                            ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                            : 'bg-zinc-800/50 text-zinc-400 border border-zinc-700 hover:bg-zinc-800 hover:text-zinc-300'
+                    )}
+                >
+                    Top Profit
+                </button>
+                <button
+                    onClick={() => handleCategoryChange('Community')}
+                    className={cn(
+                        'px-4 py-2 rounded-lg text-sm font-medium transition-all',
+                        selectedCategory === 'Community'
+                            ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
+                            : 'bg-zinc-800/50 text-zinc-400 border border-zinc-700 hover:bg-zinc-800 hover:text-zinc-300'
+                    )}
+                >
+                    Community
+                </button>
+                {categories.filter(c => c !== 'Top Profit').map((category) => (
                     <button
                         key={category}
                         onClick={() => handleCategoryChange(category)}
@@ -687,6 +765,20 @@ export default function RecipesPage() {
                     If you have verified addiction data, please contribute to our data sources.
                 </p>
             </div>
+
+            <SubmitRecipeModal
+                isOpen={showSubmitModal}
+                onClose={() => setShowSubmitModal(false)}
+                onSubmitted={async () => {
+                    const recipes = await getUserRecipes();
+                    setUserRecipes(recipes);
+                }}
+            />
+
+            <LoginModal
+                isOpen={showLoginModal}
+                onClose={() => setShowLoginModal(false)}
+            />
         </div>
     );
 }

@@ -62,12 +62,19 @@ function removeEffect(currentEffects: string[], effectName: string): string[] {
     return currentEffects.filter(e => normalizeEffectName(e) !== normalized);
 }
 
+// Helper to determine product category from ID
+function getProductCategory(baseProductId: string): 'weed' | 'meth' | 'cocaine' {
+    if (baseProductId === 'meth') return 'meth';
+    if (baseProductId === 'cocaine') return 'cocaine';
+    return 'weed'; // Default for all weed strains
+}
+
 /**
  * Generate a product name based on effects and base product category
  * This mimics the in-game naming system
  */
 export function generateProductName(effectsList: string[], category: 'weed' | 'meth' | 'cocaine'): string {
-    // First, check for known exact effect combinations
+    // 1. EXACT MATCH: Check for known exact effect combinations
     const knownNames = productNames.knownProductNames?.names || [];
     for (const known of knownNames) {
         const knownEffects = known.effects.map((e: string) => normalizeEffectName(e)).sort();
@@ -80,35 +87,29 @@ export function generateProductName(effectsList: string[], category: 'weed' | 'm
         }
     }
 
-    // If no exact match, generate a name based on the most prominent effects
+    // 2. GENERATIVE LOGIC
     const namingRules = productNames.namingRules || [];
     const suffixes = productNames.nameSuffixes?.[category] || ['Mix'];
 
     let prefix = '';
 
-    // Find the first matching effect prefix (prioritize rare/legendary effects)
-    const priorityEffects = ['Anti-Gravity', 'Zombifying', 'Glowing', 'Electrifying', 'Cyclopean', 'Shrinking'];
+    // Define priority order for "Dominant Effect" (Rarest/Most Impactful first)
+    const priorityOrder = [
+        'Zombifying', 'Anti-Gravity', 'Tropic Thunder', 'Glowing', 'Electrifying',
+        'Cyclopean', 'Shrinking', 'Gingeritis', 'Toxic', 'Slippery',
+        'Athletic', 'Sneaky', 'Euphoric', 'Thought-Provoking', 'Energizing',
+        'Sedating', 'Calming', 'Refreshing', 'Bright-Eyed', 'Spicy',
+        'Foggy', 'Long Faced', 'Balding', 'Jennerific'
+    ];
 
-    // First try priority effects
-    for (const priorityEffect of priorityEffects) {
-        if (effectsList.some(e => normalizeEffectName(e) === normalizeEffectName(priorityEffect))) {
+    // Find the highest priority effect present in the mix
+    for (const priorityEffect of priorityOrder) {
+        if (hasEffect(effectsList, priorityEffect)) {
             const rule = namingRules.find((r: { effects: string[] }) =>
                 r.effects.some((re: string) => normalizeEffectName(re) === normalizeEffectName(priorityEffect))
             );
             if (rule && rule.namePrefix && rule.namePrefix.length > 0) {
-                prefix = rule.namePrefix[0];
-                break;
-            }
-        }
-    }
-
-    // If no priority effect found, use the first effect
-    if (!prefix && effectsList.length > 0) {
-        for (const effect of effectsList) {
-            const rule = namingRules.find((r: { effects: string[] }) =>
-                r.effects.some((re: string) => normalizeEffectName(re) === normalizeEffectName(effect))
-            );
-            if (rule && rule.namePrefix && rule.namePrefix.length > 0) {
+                // Pick the first prefix (most common/standard) for consistency
                 prefix = rule.namePrefix[0];
                 break;
             }
@@ -120,8 +121,11 @@ export function generateProductName(effectsList: string[], category: 'weed' | 'm
         prefix = 'Custom';
     }
 
-    // Pick a suffix based on category
-    const suffix = suffixes[Math.floor(effectsList.length % suffixes.length)];
+    // 3. SUFFIX SELECTION
+    // Use a deterministic hash of the effects length to pick a suffix
+    // This ensures "Astro Mix" doesn't change to "Astro Blend" on refresh
+    const suffixIndex = Math.floor(effectsList.length % suffixes.length);
+    const suffix = suffixes[suffixIndex];
 
     return `${prefix} ${suffix}`;
 }
@@ -296,8 +300,9 @@ export function calculateMix(
 
     // Generate product name based on effects
     // If no ingredients added, use base product name
+    const productCategory = getProductCategory(baseProduct.id);
     const generatedName = ingredientIds.length > 0
-        ? generateProductName(currentEffects, baseProduct.category as 'weed' | 'meth' | 'cocaine')
+        ? generateProductName(currentEffects, productCategory)
         : baseProduct.name;
 
     return {
